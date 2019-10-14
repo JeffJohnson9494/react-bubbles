@@ -8,7 +8,7 @@ const initialState = {
 
 const Login = (props) => {
   const [login, setLogin] = useState(initialState)
-
+//  ^ v
   const handleChanges = e => {
     setLogin({ ...login, [e.target.name] : e.target.value})
   }
@@ -16,6 +16,7 @@ const Login = (props) => {
   const handleSubmit = e => {
     e.preventDefault()
     console.log(login)
+    //once i have the proper login information this will log me in and then push me to the bubbles page with the token set
     axiosWithAuth().post("./login", login).then(res => {
         console.log(res)
         localStorage.setItem('token', res.data.payload)
@@ -23,7 +24,7 @@ const Login = (props) => {
     })
     setLogin(initialState)
   }
-//login display
+//login displayasldkjfasldkjfalskdjf;las
   return (
     <>
       <h1> Bubble App!</h1>
