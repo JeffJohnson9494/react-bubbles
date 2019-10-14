@@ -9,60 +9,34 @@ const initialColor = {
 const ColorList = ({ colors, updateColors }) => {
   const [editing, setEditing] = useState(false);
   const [colorToEdit, setColorToEdit] = useState(initialColor);
-  //const [colorList, setColorList] = useState([])
-
-  // useEffect(() => {
-  //   axiosWithAuth()
-  //     .get("http://localhost:5000/api/colors")
-  //     .then(res => {
-  //       console.log("useeffect")
-  //       setColorList(res.data)
-  //     })
-  //     .catch(err => console.log(err))
-  //   }, [editing])
-
+  
+//setting up the edit color 
   const editColor = color => {
     setEditing(true);
     setColorToEdit(color);
   };
 
-
+//using authenticated axios to put to change the active color by filtering
   const saveEdit = e => {
     e.preventDefault();
-
     let activeColor = colors.filter(color => color.id === colorToEdit.id)
     console.log(activeColor[0])
- 
-    axiosWithAuth()
-      .put(`http://localhost:5000/api/colors/${activeColor[0].id}`, colorToEdit)
-      .then(res => {
-
+    axiosWithAuth().put(`http://localhost:5000/api/colors/${activeColor[0].id}`, colorToEdit).then(res => {
         console.log(res)
-
         colors = colors.filter(color => color.id !== res.data.id)
         updateColors([...colors, res.data])
-
-        // updateColors(colors.map(color => {
-        //   if (color.id === colorToEdit.id){
-        //     color = res.data
-        //   }
-        // }))
-        
         setEditing(false)
-      })
-      .catch(err => console.log(err))
-    //console.log(colorList)
+      }).catch(err => console.log(err))
+   
     
   };
-
+//using authenticated axios to delete
   const deleteColor = color => {
-    axiosWithAuth()
-    .delete(`http://localhost:5000/api/colors/${color.id}`)
-    .then(res => console.log(res))
-    .catch(err => console.log(err))
-    //updateColors(colors.filter(color => color.id === color.id))
+    axiosWithAuth().delete(`http://localhost:5000/api/colors/${color.id}`).then(res =>
+     console.log(res)).catch(err => console.log(err))
+    
   };
-
+//is this 
   return (
     <div className="colors-wrap">
       <p>colors</p>
